@@ -1,4 +1,4 @@
-// Embedded data instead of fetching from file
+// Embedded happiness data (no fetch needed)
 const happinessData = [
   { "country": "Finland", "score": 7.8 },
   { "country": "Denmark", "score": 7.6 },
@@ -13,9 +13,10 @@ const happinessData = [
   { "country": "India", "score": 4.0 }
 ];
 
-// Sort countries by score in descending order
+// Sort by score descending
 happinessData.sort((a, b) => b.score - a.score);
 
+// Prepare chart data
 const countries = happinessData.map(entry => entry.country);
 const scores = happinessData.map(entry => entry.score);
 
@@ -28,6 +29,7 @@ const borderColors = happinessData.map(entry =>
   entry.country === 'India' ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'
 );
 
+// Create Chart.js bar chart
 const ctx = document.getElementById('happinessChart').getContext('2d');
 new Chart(ctx, {
   type: 'bar',
@@ -56,9 +58,7 @@ new Chart(ctx, {
           }
         }
       },
-      legend: {
-        display: false
-      }
+      legend: { display: false }
     },
     scales: {
       y: {
