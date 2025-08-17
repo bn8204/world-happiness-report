@@ -1,0 +1,31 @@
+# Python cache & env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+.venv/
+venv/
+
+# Kaggle credentials
+backend/kaggle.json
+
+# Local data/cache
+data/
+*.csv
+*.tsv
+*.parquet
+
+# Pytest & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Node / frontend (if later you add npm/yarn)
+node_modules/
+dist/

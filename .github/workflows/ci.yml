@@ -1,0 +1,49 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest flake8
+
+      # Run lint
+      - name: Lint with flake8
+        run: |
+          cd backend
+          flake8 app tests
+
+      # Run tests
+      - name: Run tests with pytest
+        run: |
+          cd backend
+          pytest --maxfail=1 --disable-warnings -q
+
+      # Deploy to Railway (only on push to main, not PRs)
+      - name: Deploy to Railway
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: railwayapp/railway-deploy@v1
+        with:
+          railwayToken: ${{ secrets.RAILWAY_TOKEN }}
