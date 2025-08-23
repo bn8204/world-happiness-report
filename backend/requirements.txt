@@ -1,7 +1,5 @@
-fastapi
-uvicorn[standard]
-kaggle
+flask
+flask-cors
+kagglehub[pandas-datasets]
 pandas
-requests
-pytest
-flake8
+gunicorn

@@ -1,31 +1,21 @@
-# Python cache & env
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-*.db
-.env
-.venv/
+
+# Virtual environment
 venv/
+env/
+.env
 
-# Kaggle credentials
-backend/kaggle.json
+# Kaggle API key folder (if any)
+.kaggle/
 
-# Local data/cache
-data/
-*.csv
-*.tsv
-*.parquet
-
-# Pytest & coverage
-.pytest_cache/
-.coverage
-htmlcov/
-
-# OS junk
+# OS generated files
 .DS_Store
 Thumbs.db
 
-# Node / frontend (if later you add npm/yarn)
-node_modules/
-dist/
+# IDE settings
+.vscode/
+.idea/
+*.swp
