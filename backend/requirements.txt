@@ -1,5 +1,0 @@
-flask
-flask-cors
-kagglehub[pandas-datasets]
-pandas
-gunicorn
