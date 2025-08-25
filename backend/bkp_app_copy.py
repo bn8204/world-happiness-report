@@ -1,8 +1,8 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify
 from flask_cors import CORS
 from kagglehub import load_dataset, KaggleDatasetAdapter
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
+app = Flask(__name__)
 CORS(app)
 
 DATASET_SLUG = "biswajit8204/w-h-r-2024"
@@ -20,28 +20,30 @@ def load_data():
         )
     return cached_df
 
-@app.route("/")
-def index():
-    return render_template("index.html")
-
 @app.route('/api/happiness')
 def happiness():
     try:
         df = load_data()
+
         if 'Country name' in df.columns and 'Ladder score' in df.columns:
             df_ = df.rename(columns={'Country name': 'country', 'Ladder score': 'score'})
         else:
             return jsonify({"error": f"Expected columns missing. Found: {df.columns.tolist()}"}), 500
+
         data = df_[['country', 'score']].to_dict(orient='records')
         return jsonify(data)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/happiness/<country>')
-def happiness_details(country):
+@app.route('/api/happiness/details')
+def happiness_details():
     try:
         df = load_data()
+
         rename_map = {
+            'Country name': 'country',
+            'Ladder score': 'score',
             'Explained by: Log GDP per capita': 'log_gdp_per_capita',
             'Explained by: Social support': 'social_support',
             'Explained by: Healthy life expectancy': 'healthy_life_expectancy',
@@ -50,17 +52,17 @@ def happiness_details(country):
             'Explained by: Perceptions of corruption': 'perceptions_of_corruption',
             'Dystopia + residual': 'dystopia_residual'
         }
-        if 'Country name' not in df.columns:
-            return jsonify({"error": "Missing column: Country name"}), 500
 
-        row = df[df['Country name'] == country]
-        if row.empty:
-            return jsonify({"error": f"No data found for {country}"}), 404
+        missing = [k for k in rename_map if k not in df.columns]
+        if missing:
+            return jsonify({"error": f"Missing columns: {missing}"}), 500
 
-        details = {rename_map[k]: float(row.iloc[0][k]) for k in rename_map if k in df.columns}
-        return jsonify(details)
+        df_ = df.rename(columns=rename_map)
+        data = df_[list(rename_map.values())].to_dict(orient='records')
+        return jsonify(data)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
