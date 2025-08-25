@@ -3,3 +3,4 @@ flask-cors
 kagglehub[pandas-datasets]
 pandas
 gunicorn
+uvicorn
