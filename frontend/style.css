@@ -32,7 +32,6 @@ canvas {
   border-radius: 8px;
 }
 
-/* Style for dynamically added radar chart */
 #detailsChart {
   margin-top: 40px;
 }

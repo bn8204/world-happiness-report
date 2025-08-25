@@ -24,7 +24,6 @@ def load_data():
 def happiness():
     try:
         df = load_data()
-
         if 'Country name' in df.columns and 'Ladder score' in df.columns:
             df_ = df.rename(columns={'Country name': 'country', 'Ladder score': 'score'})
         else:
@@ -32,7 +31,6 @@ def happiness():
 
         data = df_[['country', 'score']].to_dict(orient='records')
         return jsonify(data)
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -40,7 +38,6 @@ def happiness():
 def happiness_details():
     try:
         df = load_data()
-
         rename_map = {
             'Country name': 'country',
             'Ladder score': 'score',
@@ -52,7 +49,6 @@ def happiness_details():
             'Explained by: Perceptions of corruption': 'perceptions_of_corruption',
             'Dystopia + residual': 'dystopia_residual'
         }
-
         missing = [k for k in rename_map if k not in df.columns]
         if missing:
             return jsonify({"error": f"Missing columns: {missing}"}), 500
@@ -60,13 +56,10 @@ def happiness_details():
         df_ = df.rename(columns=rename_map)
         data = df_[list(rename_map.values())].to_dict(orient='records')
         return jsonify(data)
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)
