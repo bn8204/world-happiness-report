@@ -9,7 +9,7 @@
 This project visualizes the **World Happiness Report 2024**, showing the **top 10 happiest countries** plus **India’s happiness score**. The front-end is hosted on **GitHub Pages**, and the backend is a **Python (Flask/FastAPI) service** hosted on **Render** in production.
 
 **Live Demo (Frontend):** [https://bn8204.github.io/world-happiness-report/](https://bn8204.github.io/world-happiness-report/)  
-**Live Production Backend API:** [https://world-happiness-report-r1m1.onrender.com/data](https://world-happiness-report-r1m1.onrender.com)
+**Live Production Backend API:** [https://world-happiness-report-r1m1.onrender.com/](https://world-happiness-report-r1m1.onrender.com)
 
 
 
@@ -113,4 +113,5 @@ Add authentication and persistence with Firebase or a custom backend database
 
 License
 This project is licensed under the MIT License.
+
 
